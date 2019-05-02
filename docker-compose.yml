@@ -1,0 +1,10 @@
+version: "3.7"
+services:
+  workstation:
+    environment: 
+      - BUILD_SERVER_SSH_PUBLIC_KEY
+    build:
+      context: .
+    ports:
+      - 2222:2222
+      - 8443:8443
