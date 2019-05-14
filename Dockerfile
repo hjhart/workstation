@@ -84,13 +84,11 @@ RUN /root/.rbenv/bin/rbenv install $RUBY_VERSION
 RUN /root/.rbenv/bin/rbenv global $RUBY_VERSION
 RUN /root/.rbenv/bin/rbenv exec gem install bundler
 
-### Workspace ###
-RUN mkdir -p ~/workspace
-
 ### SSH / MOSH ###
 EXPOSE $WORKSTATION_SSH_PORT $WORKSTATION_MOSH_PORT_RANGE/udp $CODE_SERVER_PORT
 
 ### Entrypoint ###
-WORKDIR /root
-COPY entrypoint.sh /bin/entrypoint.sh
-CMD ["/bin/entrypoint.sh"]
+WORKDIR /home/coder/project
+COPY . .
+RUN ln -s /usr/src/code-server/workstation-setup.sh /usr/local/bin/workstation-setup
+ENTRYPOINT ["./entrypoint.sh"]
