@@ -4,8 +4,6 @@ FROM codercom/code-server:1.621
 ## Build our Ubuntu Image
 FROM ubuntu:18.10
 
-ARG BUILD_SERVER_SSH_PUBLIC_KEY
-
 ENV LANG="en_US.UTF-8"
 ENV LANGUAGE="en_US.UTF-8"
 ENV TERM screen-256color
@@ -42,8 +40,7 @@ RUN sed 's/#PubkeyAuthentication yes/PubkeyAuthentication yes/' -i /etc/ssh/sshd
 RUN sed 's/#PermitRootLogin prohibit-password/PermitRootLogin prohibit-password/' -i /etc/ssh/sshd_config
 
 RUN mkdir -p ~/.ssh
-RUN echo "$BUILD_SERVER_SSH_PUBLIC_KEY" > /root/.ssh/authorized_keys
-RUN chmod 700 ~/.ssh && chmod 600 ~/.ssh/authorized_keys
+RUN chmod 700 ~/.ssh
 
 ### install 1password ###
 RUN apt-get update && apt-get install -y curl ca-certificates unzip

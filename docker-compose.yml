@@ -2,16 +2,12 @@ version: "3.3"
 services:
   workstation:
     image: hjhart/code-server:v1
-    environment: 
-      - BUILD_SERVER_SSH_PUBLIC_KEY
     build:
       context: .
     ports:
       - "8443:8443"
     command: ["code-server", "."]
-
-  ssh:
-    image: hjhart/code-server:v1
-    ports:
-      - "2222:2222"
-    command: ["/usr/sbin/sshd -D -d"]
+    volumes:
+      - ~/.ssh/id_rsa:/root/.ssh/id_rsa
+      - ~/.ssh/id_rsa.pub:/root/.ssh/id_rsa.pub
+      - ~/.gitconfig:/root/.gitconfig
