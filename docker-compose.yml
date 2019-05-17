@@ -16,11 +16,11 @@ services:
       - ~/.gitconfig:/root/.gitconfig
       - ~/workspace/ponton:/home/coder/project
   gogaruco:
-    image: hjhart/code-server-2.1.2-10:v1
+    image: hjhart/code-server-2.6.3-10:v1
     build:
       context: .
       args:
-        - RUBY_VERSION=2.1.2
+        - RUBY_VERSION=2.6.3
     ports:
       - "8442:8443"
     command: ["code-server", "."]

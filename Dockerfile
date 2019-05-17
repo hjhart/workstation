@@ -61,10 +61,6 @@ RUN mkdir -p /root/.local/share/code-server
 RUN mkdir -p /root/.cache/code-server
 COPY --from=0 /usr/local/bin/code-server /usr/local/bin/code-server
 
-ARG NODE_VERSION=10
-ARG RUBY_VERSION=2.5.0
-ARG CODE_SERVER_VERSION=1.604-vsc1.32.0
-
 ENV LANG="en_US.UTF-8"
 ENV LANGUAGE="en_US.UTF-8"
 ENV TERM screen-256color
@@ -73,12 +69,14 @@ ENV WORKSTATION_MOSH_PORT_RANGE 60000-60010
 ENV CODE_SERVER_PORT 8443
 
 # node, nvm, and yarn
+ARG NODE_VERSION=10
 RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
 RUN . /root/.nvm/nvm.sh && nvm install $NODE_VERSION
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
 RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
 RUN apt-get update && apt-get install --no-install-recommends yarn
 
+ARG RUBY_VERSION=2.5.0
 RUN /root/.rbenv/bin/rbenv install $RUBY_VERSION
 RUN /root/.rbenv/bin/rbenv global $RUBY_VERSION
 RUN /root/.rbenv/bin/rbenv exec gem install bundler
