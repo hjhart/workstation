@@ -1,9 +1,12 @@
 version: "3.3"
 services:
-  workstation:
-    image: hjhart/code-server:v1
+  ponton:
+    image: hjhart/code-server-2.5.1-11:v1
     build:
       context: .
+      args:
+        - RUBY_VERSION=2.5.1
+        - NODE_VERSION=11
     ports:
       - "8443:8443"
     command: ["code-server", "."]
@@ -11,3 +14,18 @@ services:
       - ~/.ssh/id_rsa:/root/.ssh/id_rsa
       - ~/.ssh/id_rsa.pub:/root/.ssh/id_rsa.pub
       - ~/.gitconfig:/root/.gitconfig
+      - ~/workspace/ponton:/home/coder/project
+  gogaruco:
+    image: hjhart/code-server-2.1.2-10:v1
+    build:
+      context: .
+      args:
+        - RUBY_VERSION=2.1.2
+    ports:
+      - "8442:8443"
+    command: ["code-server", "."]
+    volumes:
+      - ~/.ssh/id_rsa:/root/.ssh/id_rsa
+      - ~/.ssh/id_rsa.pub:/root/.ssh/id_rsa.pub
+      - ~/.gitconfig:/root/.gitconfig
+      - ~/workspace/gogaruco:/home/coder/project
